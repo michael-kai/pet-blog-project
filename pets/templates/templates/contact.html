@@ -1,0 +1,23 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+<title>{{ title }}</title>
+<div class="container">
+  <form action="{% url 'contact_receiver' %}" method="post">
+    {% csrf_token %}
+
+    <label for="id_name">Name</label>
+    <input type="text" name="name" maxlength="250" required id="id_name" placeholder="Your name..">
+
+    <label for="id_email">Email</label>
+    <input type="email" name="email" maxlength="250" required id="id_email" placeholder="Your email..">
+
+    <label style="margin-top: 150px;" for="id_msg">Subject</label>
+    <br>
+    <textarea class="textarea" id="id_msg" name="msg" maxlength="5000" required placeholder="Write something.." ></textarea>
+
+    <input class="registerbtn" type="submit" value="Submit">
+
+  </form>
+</div>
+{% endblock %}

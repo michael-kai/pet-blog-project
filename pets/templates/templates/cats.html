@@ -1,0 +1,53 @@
+{% extends 'templates/base.html' %}
+{% block content %}
+<title>{{ title }}</title>
+
+<div class="content-text">
+    <ul class="list-articles">
+        {% for post in object_list %}
+            <li>
+                <div>
+                    <div class="art_block">
+                    <p id="article_header"><a style="color: black;" href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+                    <div style="height: 150px;">
+                    <p><img id="img-article-left" src="{{ post.photo }}">
+                    {% autoescape off %}
+                    <p>{{ post.content|truncatewords:45 }}</p>
+                    {% endautoescape %}
+                    </div>
+                    </div>
+                    <div class="article_post">
+                        <p style="display: inline; float: left; margin-top: -10px; margin-bottom: 5px; color: white;">{{ post.time_create.date }}</p>
+                        <p style="display: inline; float: right; margin-top: -10px; margin-bottom: 5px;"><a class="article_link" href="{{ post.get_absolute_url }}">Read Post</a></p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if page_obj.has_other_pages %}
+<nav style="text-align: center; font-size: 30px;">
+    <ul style="display: inline-flex; list-style: none;">
+        {% if page_obj.has_previous %}
+        <li>
+            <a style="font-size: 20px;" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        {% for pag in paginator.page_range %}
+        {% if page_obj.number == pag %}
+        <li style="padding-left: 5px; padding-right: 5px;">{{ pag }}</li>
+        {% elif pag >= page_obj.number|add:-2 and pag <= page_obj.number|add:2 %}
+        <li style="padding-left: 5px; padding-right: 5px;">
+            <a href="?page={{ pag }}">{{ pag }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li>
+                <a style="font-size: 20px;" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}

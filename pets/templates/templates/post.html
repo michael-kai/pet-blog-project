@@ -1,0 +1,38 @@
+{% extends 'templates/base.html' %}
+{% block content %}
+<title>{{ article.title }}</title>
+<div class="article">
+    <h1>{{ article.title }}</h1>
+    <img width="850" height="500" src="{{ article.photo }}">
+    {% autoescape off %}
+        {{ article.content }}
+    {% endautoescape %}
+</div>
+
+<div class="article">
+    {% for comment in comments %}
+    <div>
+        <p class="comment-name">{{ comment.name }}</p>
+        <p class="comment-body">{{ comment.body }}</p>
+    </div>
+    {% endfor %}
+
+{% if request.user.is_authenticated %}
+
+    <form action="{% url 'add_comment' %}" method="post" >
+        {% csrf_token %}
+        <label for="body">Leave a comment...</label>
+        <br>
+        <textarea class="textarea" id="body" name="body"></textarea>
+        <input type="hidden" id="name" name="name" value="{{ request.user.id }}">
+        <input type="hidden" id="article" name="article" value="{{ article.id }}">
+        <br>
+        <input class="registerbtn" type="submit">
+    </form>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">Login</a> to leave comments...</p>
+{% endif %}
+</div>
+
+
+{% endblock content %}

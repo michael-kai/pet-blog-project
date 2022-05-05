@@ -1,0 +1,39 @@
+{% extends 'templates/base.html' %}
+{% block content %}
+<title>Search</title>
+<div class="search-container">
+  <form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+
+    <label for="search">Search</label>
+    <input type="text" id="search" name="search_query" placeholder="Find interesting article">
+
+    <input class="registerbtn" type="submit" value="Find">
+
+  </form>
+<br>
+<!--{% if search_result %}-->
+<!--    {% for article in search_result %}-->
+<!--    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>-->
+<!--    {% endfor %}-->
+<!--{% endif %}-->
+{% if search_result %}
+<ul class="latest_articles">
+    {% for article in search_result %}
+        <li style="margin-top: 20px; font-size: 20px"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></li>
+        <p style="margin-top: 3px; margin-bottom: 0px;">Date: {{ article.time_create.date }}</p>
+        <hr style="background-color: #6495ED; height: 2px; width: 100%; margin-left: 0px;">
+    {% endfor %}
+
+</ul>
+{% endif %}
+    {% if empty_result %}
+    <p style="margin-top: 20px; font-size: 20px">Seems list is empty, try again... </p>
+{% endif %}
+</div>
+
+
+{% endblock %}
+
+
+

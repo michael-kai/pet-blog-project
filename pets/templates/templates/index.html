@@ -1,0 +1,28 @@
+{% extends 'templates/base.html' %}
+{% load static %}
+{% block content %}
+<title>Pets Life</title>
+
+<table bgcolor="#EFF0F2">
+<thead>
+  <tr id="tr">
+    <td align="center" width="50%" style="margin-right: 0px;">
+        <h1>Website about cats and dogs</h1>
+        <img width="900" height="600" src="{% static 'pet_blog/images/main_page.jpg' %}">
+    </td>
+    <td width="40%" align="left">
+        <div style="margin-left: 0px;">
+            <ul class="latest_articles">
+                <h2>Latest News</h2>
+                {% for lat in latest_articles %}
+                <li style="margin-top: 20px; font-size: 20px"><a href="{{ lat.get_absolute_url }}">{{ lat.title }}</a></li>
+                <p style="margin-top: 3px; margin-bottom: 0px;">Date: {{ lat.time_create.date }}</p>
+                <hr style="background-color: #6495ED; height: 2px; width: 60%; margin-left: 0px;">
+                {% endfor %}
+        </ul>
+        </div>
+    </td>
+  </tr>
+</thead>
+</table>
+{% endblock %}

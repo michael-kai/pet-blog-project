@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" href="{% static 'pet_blog/css/styles.css' %}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'pet_blog/images/favicon.ico' %}">
+</head>
+<body>
+<div class="header" id="myHeader">
+    <ul class="mainmenu">
+        {% if request.user.is_authenticated %}
+            {% for m in menu|slice:"2:" %}
+                    {% if m.name == 'Pets Life' %}
+                        <li class="first"><a href="{% url 'home' %}">{{ m.name }}</a></li>
+                    {% else %}
+                    <li><a href="{% url m.url_name %}">{{ m.name }}</a></li>
+                    {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for m in menu %}
+                {% if m.name == 'Pets Life' %}
+                    <li class="first"><a href="{% url 'home' %}">{{ m.name }}</a></li>
+                {% elif m.name == 'Logout' %}
+                {% else %}
+                    <li><a href="{% url m.url_name %}">{{ m.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
+{% block content %}
+{% endblock content %}
+<div class="footer">
+    <ul class="footer" >
+        {% for f in footer %}
+            <li><a style="color: white;" href="{% url f.url_name %}">{{ f.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>
