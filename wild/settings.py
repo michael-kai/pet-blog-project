@@ -33,7 +33,6 @@ DEBUG = False
 ALLOWED_HOSTS = ['pet-blog-project.heroku.com']
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
