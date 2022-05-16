@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, CreateView
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseServerError
+from rest_framework import generics
+from .serializers import *
 from .mixins import BaseMixin
 from .models import *
 from .forms import *
@@ -148,6 +150,16 @@ class ContactPage(BaseMixin, TemplateView):
         context.update(base_context)
         context['title'] = 'Contact'
         return context
+
+
+class DogsAPIView(generics.ListAPIView):
+    queryset = Article.objects.filter(cat_id__slug='dogs')
+    serializer_class = ArticleSerializer
+
+
+class CatsAPIView(generics.ListAPIView):
+    queryset = Article.objects.filter(cat_id__slug='cats')
+    serializer_class = ArticleSerializer
 
 
 def contact_receiver(request):

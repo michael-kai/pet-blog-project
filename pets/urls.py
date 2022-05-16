@@ -13,5 +13,7 @@ urlpatterns = [
     path('comment/', comment_receiver, name='add_comment'),
     path('contact/', ContactPage.as_view(), name='contact'),
     path('contact-receiver/', contact_receiver, name='contact_receiver'),
+    path('api/v1/dogs/', DogsAPIView.as_view()),
+    path('api/v1/cats/', CatsAPIView.as_view()),
     path('<slug:post_slug>/', ShowPost.as_view(), name='post'),
 ]
