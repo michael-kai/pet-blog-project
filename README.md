@@ -20,3 +20,9 @@ After login, links to **Join** and **Login** are replaced by **Logout** link.
 **Terms and Conditions** simple template page.
 
 Under each article registrated users can leave commentaries.
+
+## API
+API made to have fast access to articles. For each category user can request all articles in JSON.
+API available by path **domain**/api/v1/**category**.
+For example - https://pet-blog-project.herokuapp.com/api/v1/dogs/
+
