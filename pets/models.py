@@ -12,6 +12,7 @@ class Article(models.Model):
     time_update = models.DateTimeField(auto_now=True, verbose_name='Time update')
     is_published = models.BooleanField(default=True, verbose_name='Is published')
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Category')
+    author = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['-time_create', 'title']
