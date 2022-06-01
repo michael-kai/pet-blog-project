@@ -21,7 +21,7 @@ class MainPage(BaseMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         base_context = self.get_user_context(**kwargs)
         context.update(base_context)
-        latest_articles = Article.objects.all().order_by('-time_create')[:5]
+        latest_articles = Article.objects.all().exclude(is_published=False).order_by('-time_create')[:5]
         context['latest_articles'] = latest_articles
         return context
 
@@ -30,7 +30,7 @@ class CatsPage(BaseMixin, ListView):
     paginate_by = 5
     template_name = 'templates/cats.html'
     context_object_name = 'menu'
-    queryset = Article.objects.filter(cat_id__slug='cats')
+    queryset = Article.objects.filter(cat_id__slug='cats').exclude(is_published=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,7 +44,7 @@ class DogsPage(BaseMixin, ListView):
     paginate_by = 5
     template_name = 'templates/dogs.html'
     context_object_name = 'menu'
-    queryset = Article.objects.filter(cat_id__slug='dogs')
+    queryset = Article.objects.filter(cat_id__slug='dogs').exclude(is_published=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,7 +112,7 @@ class ShowPost(BaseMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         base_context = self.get_user_context(**kwargs)
         context.update(base_context)
-        context['article'] = Article.objects.get(slug=context['post_slug'])
+        context['article'] = Article.objects.get(slug=context['post_slug']).exclude(is_published=False)
         context['comments'] = Comment.objects.filter(article_id=context['article'].id)
         return context
 
