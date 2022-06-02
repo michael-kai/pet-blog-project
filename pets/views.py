@@ -112,7 +112,7 @@ class ShowPost(BaseMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         base_context = self.get_user_context(**kwargs)
         context.update(base_context)
-        context['article'] = Article.objects.get(slug=context['post_slug']).exclude(is_published=False)
+        context['article'] = Article.objects.get(slug=context['post_slug'])
         context['comments'] = Comment.objects.filter(article_id=context['article'].id)
         return context
 
