@@ -22,6 +22,7 @@
                 {% if m.name == 'Pets Life' %}
                     <li class="first"><a href="{% url 'home' %}">{{ m.name }}</a></li>
                 {% elif m.name == 'Logout' %}
+                {% elif m.name == 'Add Post' %}
                 {% else %}
                     <li><a href="{% url m.url_name %}">{{ m.name }}</a></li>
                 {% endif %}
