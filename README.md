@@ -15,6 +15,8 @@ Deployed app available here https://pet-blog-project.herokuapp.com/
 
 After login, links to **Join** and **Login** are replaced by **Logout** link.
 
+**Add Post** page available for registered users. User can post own articles.
+
 **Contact** page saves messages from users.
 
 **Terms and Conditions** simple template page.
@@ -40,7 +42,7 @@ Allowed: GET, PUT, PATCH, DELETE, HEAD, OPTIONS.
 
 Only authors can use PUT, PATCH, DELETE methods.
 
-###Users Endpoints
+### Users Endpoints
 
 **api/v1/auth/users/** - Registration. Provide {username} and {password}. 
 
