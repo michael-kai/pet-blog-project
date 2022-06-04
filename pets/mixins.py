@@ -6,6 +6,7 @@ MAIN_MENU = [
     {'name': 'Login', 'url_name': 'sign-in'},
     {'name': 'Join', 'url_name': 'join'},
     {'name': 'Logout', 'url_name': 'sign-out'},
+    {'name': 'Add Post', 'url_name': 'add-post'},
     {'name': 'Search', 'url_name': 'search'},
     {'name': 'Dogs', 'url_name': 'dogs'},
     {'name': 'Cats', 'url_name': 'cats'},

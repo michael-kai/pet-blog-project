@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path, re_path, include
 from .views import *
 from rest_framework import routers
@@ -10,6 +11,7 @@ urlpatterns = [
     path('', MainPage.as_view(), name='home'),
     path('cats/', CatsPage.as_view(), name='cats'),
     path('dogs/', DogsPage.as_view(), name='dogs'),
+    path('add-post', login_required(AddPost.as_view()), name='add-post'),
     path('join/', JoinPage.as_view(), name='join'),
     path('sign-in/', LoginUser.as_view(), name='sign-in'),
     path('sign-out/', logout_user, name='sign-out'),

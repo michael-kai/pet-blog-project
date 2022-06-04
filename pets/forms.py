@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 from .models import *
 
@@ -33,3 +32,12 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ('name', 'email', 'msg')
+
+
+class AddPostForm(forms.ModelForm):
+    photo = forms.URLField(label='Photo', widget=forms.URLInput)
+    content = forms.CharField(label='Your Post', widget=forms.TextInput({'class': 'textarea'}))
+
+    class Meta:
+        model = Article
+        fields = ('title',  'photo', 'cat', 'content',)

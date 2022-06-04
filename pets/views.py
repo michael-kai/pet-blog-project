@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, TemplateView, CreateView
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseServerError
 from rest_framework import viewsets
@@ -55,6 +56,28 @@ class DogsPage(BaseMixin, ListView):
         context.update(base_context)
         context['title'] = 'Dogs'
         return context
+
+
+class AddPost(BaseMixin, CreateView):
+    model = Article
+    template_name = 'templates/add-article.html'
+    form_class = AddPostForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        base_context = self.get_user_context(**kwargs)
+        context.update(base_context)
+        context['title'] = 'Add Post'
+        return context
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        # print(self.request.__dict__)
+        post.slug = slugify(post.title)
+
+        post.save()
+        return redirect(self.request.META['HTTP_REFERER'])
 
 
 class JoinPage(BaseMixin, CreateView):
