@@ -5,11 +5,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, CreateView
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseServerError
-from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+import rest_framework.permissions as permissions
 from .serializers import *
 from .mixins import BaseMixin
 from .models import *
 from .forms import *
+from .permissions import IsOwnerOrReadOnly
 
 
 class MainPage(BaseMixin, TemplateView):
@@ -117,7 +120,6 @@ class ShowPost(BaseMixin, TemplateView):
         return context
 
 
-
 def comment_receiver(request):
     if request.method == 'POST':
         cf = CommentForm(request.POST or None)
@@ -152,14 +154,20 @@ class ContactPage(BaseMixin, TemplateView):
         return context
 
 
-class DogsAPIView(generics.ListAPIView):
-    queryset = Article.objects.filter(cat_id__slug='dogs')
-    serializer_class = ArticleSerializer
+class CatsAPIPaginator(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 5
 
 
-class CatsAPIView(generics.ListAPIView):
-    queryset = Article.objects.filter(cat_id__slug='cats')
+class APIArticle(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    pagination_class = CatsAPIPaginator
+    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
 def contact_receiver(request):

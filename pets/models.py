@@ -10,7 +10,7 @@ class Article(models.Model):
     photo = models.CharField(max_length=300, verbose_name='Photo')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Time create')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Time update')
-    is_published = models.BooleanField(default=True, verbose_name='Is published')
+    is_published = models.BooleanField(default=False, verbose_name='Is published')
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Category')
     author = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
 

@@ -3,14 +3,13 @@ Basic mixins
 """
 
 MAIN_MENU = [
-    {'name': 'Login', 'url_name': 'login'},
+    {'name': 'Login', 'url_name': 'sign-in'},
     {'name': 'Join', 'url_name': 'join'},
-    {'name': 'Logout', 'url_name': 'logout'},
+    {'name': 'Logout', 'url_name': 'sign-out'},
     {'name': 'Search', 'url_name': 'search'},
     {'name': 'Dogs', 'url_name': 'dogs'},
     {'name': 'Cats', 'url_name': 'cats'},
     {'name': 'Pets Life', 'url_name': 'home'},
-
 ]
 
 FOOTER_MENU = [

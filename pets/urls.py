@@ -1,19 +1,26 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from .views import *
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'api/v1/articles', APIArticle, basename='article')
+
 
 urlpatterns = [
     path('', MainPage.as_view(), name='home'),
     path('cats/', CatsPage.as_view(), name='cats'),
     path('dogs/', DogsPage.as_view(), name='dogs'),
     path('join/', JoinPage.as_view(), name='join'),
-    path('login/', LoginUser.as_view(), name='login'),
-    path('logout', logout_user, name='logout'),
+    path('sign-in/', LoginUser.as_view(), name='sign-in'),
+    path('sign-out/', logout_user, name='sign-out'),
     path('search/', search_page, name='search'),
     path('terms-of-service/', TermsPage.as_view(), name='terms'),
     path('comment/', comment_receiver, name='add_comment'),
     path('contact/', ContactPage.as_view(), name='contact'),
     path('contact-receiver/', contact_receiver, name='contact_receiver'),
-    path('api/v1/dogs/', DogsAPIView.as_view()),
-    path('api/v1/cats/', CatsAPIView.as_view()),
     path('<slug:post_slug>/', ShowPost.as_view(), name='post'),
+    path('api/v1/auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
+urlpatterns += router.urls
+
